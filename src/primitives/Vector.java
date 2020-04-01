@@ -14,7 +14,7 @@ public final class Vector
 
     /**
      *  Vector constructor receiving 3 coordinate of the head point values
-     * @param _x
+     * @param _x value on x axif
      * @param _y
      * @param _z
      */

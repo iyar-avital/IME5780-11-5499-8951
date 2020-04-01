@@ -21,7 +21,7 @@ public final class Vector
     public Vector(Coordinate _x, Coordinate _y, Coordinate _z) {
         this._head = new Point3D(_x, _y, _z);
         if (_head.equals(Point3D.ZERO))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Point3D(0.0,0.0,0.0) not valid for vector head");
     }
 
     /**
@@ -33,7 +33,7 @@ public final class Vector
     public Vector(double _x, double _y, double _z) {
         this._head = new Point3D(_x, _y, _z);
         if (_head.equals(Point3D.ZERO))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Point3D(0.0,0.0,0.0) not valid for vector head");
     }
 
     /**
@@ -42,7 +42,7 @@ public final class Vector
      */
     public Vector(Point3D _head) {
         if (_head.equals(Point3D.ZERO))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Point3D(0.0,0.0,0.0) not valid for vector head");
         this._head = new Point3D(_head);
     }
 
@@ -91,7 +91,7 @@ public final class Vector
                 this._head.get_y().get()*number,
                 this._head.get_z().get()*number));
     }
-
+    
     public double dotProduct(Vector other) {
         return this._head.get_x().get()*other._head.get_x().get() +
                 this._head.get_y().get()*other._head.get_y().get() +

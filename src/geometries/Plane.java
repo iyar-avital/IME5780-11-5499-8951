@@ -27,7 +27,7 @@ public class Plane implements Geometry {
 
     public Plane(Point3D point, Vector normal) {
         this._point = new Point3D(point);
-        this._normal = new Vector(normal);
+        this._normal = new Vector(normal.normalized());
     }
 
     @Override

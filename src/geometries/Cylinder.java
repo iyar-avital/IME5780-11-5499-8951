@@ -20,10 +20,4 @@ public class Cylinder extends Tube {
         _height = height;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() +
-                ", _height=" + _height;
-
-    }
 }

@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import static primitives.Util.isZero;
+
 public class Tube extends RadialGeometry {
 
     protected Ray _axisRay;
@@ -30,6 +32,12 @@ public class Tube extends RadialGeometry {
 
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+
+        Point3D o = _axisRay.get_poo();
+        Vector v= _axisRay.get_direction();
+        double t= point.subtract(o).dotProduct(v);
+        if (!isZero(t))
+            o= o.add(v.scale(t));
+        return point.subtract(o).normalize();
     }
 }

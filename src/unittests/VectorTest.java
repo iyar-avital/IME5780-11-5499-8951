@@ -63,6 +63,17 @@ public class VectorTest {
 
     @org.junit.Test
     public void testScale() {
+
+            Vector v1 = new Vector(1,1,1);
+
+            Vector v1test = v1.scale(1);
+            assertEquals(new Vector(1,1,1),v1test);
+
+            Vector v2test = v1test.scale(2);
+            assertEquals(new Vector(2,2,2),v2test);
+
+            Vector v3test = v2test.scale(-2);
+            assertEquals(new Vector(-4,-4,-4),v3test);
     }
 
     @org.junit.Test
@@ -75,7 +86,7 @@ public class VectorTest {
        assertEquals("dotProduct() wrong value", -28d, v1.dotProduct(v2), 0.00001);
 
        // =============== Boundary Values Tests =================
-        // TC11: dotProduct for orthogonal vectors
+        //  TC11: dotProduct for orthogonal vectors
         Vector v3 = new Vector(0, 3, -2);
         assertEquals("dotProduct() for orthogonal vectors is not zero", 0d, v1.dotProduct(v3), 0.00001);
     }
@@ -109,10 +120,20 @@ public class VectorTest {
 
     @org.junit.Test
     public void testLengthSquared() {
+        Vector v1 = new Vector(3.6, -5.0, 10.0);
+        Vector v2 = new Vector(2.8,7,0.5);
+
+        assertEquals(v1.lengthSquared(), 137.96, 1e-10);
+        assertEquals(v2.lengthSquared(), 57.09, 1e-10);
     }
 
     @org.junit.Test
     public void testLength() {
+        Vector v1 = new Vector(3.6, -5.0, 10.0);
+        Vector v2 = new Vector(2.8,7,0.5);
+
+        assertEquals(v1.length(), 11.7456374, 0.001);
+        assertEquals(v2.length(), 7.555792, 0.001);
     }
 
     @org.junit.Test
@@ -129,9 +150,5 @@ public class VectorTest {
             assertEquals("Point3D(0.0,0.0,0.0) not valid for vector head", ex.getMessage());
         }
         assertTrue(true);
-    }
-
-    @org.junit.Test
-    public void testNormalized() {
     }
 }

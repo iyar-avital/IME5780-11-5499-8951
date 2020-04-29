@@ -10,11 +10,11 @@ import static primitives.Util.isZero;
 
 public class Tube extends RadialGeometry {
 
-    protected Ray _axisRay;
+    protected Ray _axisRay; 
     
     /**
     *constuctor
-    *get double radius and ray
+    *reciving double radius and ray
     */
     public Tube(double radius, Ray axisRay) {
         super(radius);
@@ -23,7 +23,7 @@ public class Tube extends RadialGeometry {
 
     /**
     *constuctor
-    *get RadialGeometry radius and ray
+    *reciving RadialGeometry radius and ray
     */
     public Tube(RadialGeometry _radial, Ray axisRay) {
         super(_radial);
@@ -31,7 +31,7 @@ public class Tube extends RadialGeometry {
     }
 
     /**
-    *function that 
+    *function that return the ray 
     */
     public Ray get_axisRay() {
         return new Ray(_axisRay);

@@ -16,11 +16,21 @@ public class Sphere extends RadialGeometry {
         return new Point3D(_center);
     }
 
+    /**
+    *constructor 
+    *get double radius and point
+    */
+    
     public Sphere(double radius, Point3D point) {
         super(radius);
         _center = new Point3D(point);
     }
 
+    /**
+    *constructor 
+    *RadialGeometry radius and point
+    */
+    
     public Sphere(RadialGeometry _radial, Point3D point3D) {
         super(_radial);
         _center = new Point3D(point3D);
@@ -47,6 +57,7 @@ public class Sphere extends RadialGeometry {
         } catch (IllegalArgumentException e) {
             return List.of(ray.getTargetPoint(_radius));
         }
+        
         double tm = alignZero(v.dotProduct(u));
         double dSquared = (tm == 0) ? u.lengthSquared() : u.lengthSquared() - tm * tm;
         double thSquared = alignZero(_radius * _radius - dSquared);

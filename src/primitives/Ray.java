@@ -19,8 +19,8 @@ public final class Ray
 
     /**
      * Ray constructor receiving direction vector and point
-     * @param _direction
-     * @param _poo
+     * @param _direction - the direction vector
+     * @param _poo - the start of the ray point
      */
     public Ray(Vector _direction, Point3D _poo) {
         _direction.normalize();
@@ -30,8 +30,8 @@ public final class Ray
 
     /**
      * Ray constructor receiving direction vector and point
-     * @param _poo
-     * @param _direction
+     * @param _poo - the start of the ray point
+     * @param _direction - the direction vector
      */
     public Ray(Point3D _poo, Vector _direction) {
         _direction.normalize();
@@ -42,7 +42,7 @@ public final class Ray
     /**
      * Ray copy constructor receiving a Ray and build
      * a new Ray with identical direction vector and point
-     * @param ray
+     * @param ray - the ray to copy it
      */
     public Ray(Ray ray) {
         this._direction = new Vector(ray._direction);
@@ -60,7 +60,7 @@ public final class Ray
     public Point3D get_poo() { return new Point3D(_poo); }
 
     /**
-     * @param length
+     * @param length the length
      * @return new Point3D
      */
     public Point3D getTargetPoint(double length) {

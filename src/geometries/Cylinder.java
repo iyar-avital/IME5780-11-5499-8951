@@ -11,8 +11,8 @@ public class Cylinder extends Tube {
     }
 
     /**
-    *constructor
-    *reciving double radius, ray and hight
+    * constructor
+    * receiving double radius, ray and height
     */
     public Cylinder(double radius, Ray axisRay, double height) {
         super(radius, axisRay);
@@ -20,8 +20,8 @@ public class Cylinder extends Tube {
     }
     
     /**
-    *constructor
-    *reciving radialGeometry radius, ray and hight
+    * constructor
+    * receiving radialGeometry radius, ray and height
     */
     public Cylinder(RadialGeometry _radial, Ray axisRay, double height) {
         super(_radial, axisRay);

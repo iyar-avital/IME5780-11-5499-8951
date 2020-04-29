@@ -7,8 +7,17 @@ import primitives.Vector;
 
 import java.util.List;
 
+/**
+ * triangle class
+ */
 public class Triangle extends Polygon {
 
+    /**
+     * triangle constructor
+     * @param p1 - first vertex
+     * @param p2 - second vertex
+     * @param p3 - third vertex
+     */
     public Triangle(Point3D p1, Point3D p2, Point3D p3) {
         super(new Point3D[]{p1, p2, p3});
     }

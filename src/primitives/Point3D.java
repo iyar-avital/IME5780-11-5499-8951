@@ -17,9 +17,9 @@ public final class Point3D
     public static final Point3D ZERO = new Point3D(0,0,0);
     /**
      * Point3D constructor receiving 3 coordinate values
-     * @param x
-     * @param y
-     * @param z
+     * @param x - the value in the x- axis
+     * @param y - the value in the y- axis
+     * @param z - the value in the z- axis
      */
     public Point3D(Coordinate x, Coordinate y, Coordinate z) {
         this._x = new Coordinate(x);
@@ -29,9 +29,9 @@ public final class Point3D
 
     /**
      * Point3D constructor receiving 3 double - coordinate values
-     * @param x -
-     * @param y -
-     * @param z -
+     * @param x -the value in the x- axis
+     * @param y - the value in the y- axis
+     * @param z - the value in the z- axis
      */
     public Point3D(double x, double y, double z) {
         this._x = new Coordinate(x);
@@ -85,22 +85,42 @@ public final class Point3D
         return "_x=" + _x + ", _y=" + _y + ", _z=" + _z;
     }
 
+    /**
+     * the function calculate the vector between two points
+     * @param other - the second point. the start of the voctor
+     * @return vector from point 'other' to my point
+     */
     public Vector subtract(Point3D other) {
         return new Vector(new Point3D(this._x.get() - other._x.get(),
                 this._y.get() - other._y.get(),
                 this._z.get() - other._z.get()));
     }
 
+    /**
+     * the function adds vector to point
+     * @param other - the vector to add
+     * @return new point, vectors end after adding it to the point
+     */
     public Point3D add(Vector other) {
         return new Point3D(this._x.get() + other.get_head()._x.get(),
                 this._y.get() + other.get_head()._y.get(),
                 this._z.get() + other.get_head()._z.get());
     }
 
+    /**
+     * the function calculate the distance between two points
+     * @param other - the point to calculate the distance from it
+     * @return the distance squared
+     */
     public double distanceSquared(Point3D other) {
         return this.subtract(other).lengthSquared();
     }
 
+    /**
+     * the function calculate the distance between two points
+     * @param other - the point to calculate the distance from it
+     * @return the distance
+     */
     public double distance(Point3D other) {
         return Math.sqrt(this.distanceSquared(other));
     }

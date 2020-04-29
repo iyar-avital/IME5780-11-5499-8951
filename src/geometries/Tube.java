@@ -7,7 +7,7 @@ import primitives.Vector;
 import java.util.List;
 
 import static primitives.Util.isZero;
-
+//צינור
 public class Tube extends RadialGeometry {
 
     protected Ray _axisRay; 

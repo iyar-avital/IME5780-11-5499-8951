@@ -93,15 +93,21 @@ public final class Vector
     }
     
     public double dotProduct(Vector other) {
-        return this._head.get_x().get()*other._head.get_x().get() +
-                this._head.get_y().get()*other._head.get_y().get() +
-                this._head.get_z().get()*other._head.get_z().get();
+        return (this._head.get_x().get()*other._head.get_x().get()) +
+                (this._head.get_y().get()*other._head.get_y().get()) +
+                (this._head.get_z().get()*other._head.get_z().get());
     }
 
     public Vector crossProduct(Vector other) {
         return new Vector(new Point3D(this._head.get_y().get()*other._head.get_z().get() - this._head.get_z().get()*other._head.get_y().get(),
-                this._head.get_z().get()*other._head.get_x().get() - this._head.get_x().get()*other._head.get_z().get(),
+                this._head.get_z().get()*other._head.get_x().get() - this._head.get_x().get()*other._head.get_z().get() ,
                 this._head.get_x().get()*other._head.get_y().get() - this._head.get_y().get()*other._head.get_x().get()));
+    }
+
+    public boolean isParallel(Vector other) {
+        if(this.crossProduct(other).equals(Point3D.ZERO))
+            return true;
+        return false;
     }
 
     public double lengthSquared() {

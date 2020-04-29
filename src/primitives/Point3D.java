@@ -29,9 +29,9 @@ public final class Point3D
 
     /**
      * Point3D constructor receiving 3 double - coordinate values
-     * @param x
-     * @param y
-     * @param z
+     * @param x -
+     * @param y -
+     * @param z -
      */
     public Point3D(double x, double y, double z) {
         this._x = new Coordinate(x);
@@ -42,7 +42,7 @@ public final class Point3D
     /**
      * Point3D copy constructor receiving a point and build new point
      * with identical values
-     * @param point
+     * @param point - the point to copy
      */
     public Point3D(Point3D point) {
         this._x = new Coordinate(point._x);

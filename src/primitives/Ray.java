@@ -2,6 +2,8 @@ package primitives;
 
 import java.util.Objects;
 
+import static primitives.Util.isZero;
+
 /**
  * Class Ray is the basic class representing a ray
  */
@@ -27,6 +29,17 @@ public final class Ray
     }
 
     /**
+     * Ray constructor receiving direction vector and point
+     * @param _poo
+     * @param _direction
+     */
+    public Ray(Point3D _poo, Vector _direction) {
+        _direction.normalize();
+        this._direction = new Vector(_direction);
+        this._poo = new Point3D(_poo);
+    }
+
+    /**
      * Ray copy constructor receiving a Ray and build
      * a new Ray with identical direction vector and point
      * @param ray
@@ -45,6 +58,14 @@ public final class Ray
      * @return new Point3D(_poo) - Copy of the value poo
      */
     public Point3D get_poo() { return new Point3D(_poo); }
+
+    /**
+     * @param length
+     * @return new Point3D
+     */
+    public Point3D getTargetPoint(double length) {
+        return isZero(length) ? _poo : _poo.add(_direction.scale(length));
+    }
 
     @Override
     public boolean equals(Object o) {

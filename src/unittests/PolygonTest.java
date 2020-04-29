@@ -1,4 +1,6 @@
-
+/**
+ *
+ */
 package unittests;
 
 import static org.junit.Assert.*;
@@ -90,4 +92,8 @@ public class PolygonTest {
         assertEquals("Bad normal to trinagle", new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point3D(0, 0, 1)));
     }
 
+    @Test
+    public void findIntersectionsTest() {
+        
+    }
 }

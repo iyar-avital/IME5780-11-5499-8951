@@ -3,7 +3,10 @@
 
 package com.iyar;
 
+import geometries.Plane;
+import geometries.Triangle;
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
 
 import static java.lang.System.out;
@@ -75,5 +78,13 @@ public final class Main {
             out.println("ERROR: Point - Point does not work correctly");
 
         out.println("If there were no any other outputs - all tests succeeded!");
+
+
+        Triangle triangle = new Triangle(new Point3D(1,0,2),new Point3D(0,0,2),new Point3D(1,1,1));
+        // ============ Equivalence Partitions Tests ==============
+        //Inside triangle
+        Ray ray1 = new Ray(new Point3D(1,1,0), new Vector(3,1,5));
+        triangle.findIntersections(ray1);
     }
+
 }

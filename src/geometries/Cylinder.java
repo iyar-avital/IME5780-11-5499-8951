@@ -19,5 +19,4 @@ public class Cylinder extends Tube {
         super(_radial, axisRay);
         _height = height;
     }
-
 }

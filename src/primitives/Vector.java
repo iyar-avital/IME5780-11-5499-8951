@@ -86,12 +86,18 @@ public final class Vector
         return new Vector(this._head.add(other));
     }
 
+    /**
+    * function that get number and multiply it with all coordinate of the vector
+    */
     public Vector scale(double number) {
         return new Vector(new Point3D(this._head.get_x().get()*number,
                 this._head.get_y().get()*number,
                 this._head.get_z().get()*number));
     }
     
+    /**
+    * function that do scalar multiplication
+    */
     public double dotProduct(Vector other) {
         return (this._head.get_x().get()*other._head.get_x().get()) +
                 (this._head.get_y().get()*other._head.get_y().get()) +

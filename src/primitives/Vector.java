@@ -87,7 +87,7 @@ public final class Vector
     }
 
     /**
-    * function that get number and multiply it with all coordinate of the vector
+    * getting number and return the multiplication with all coordinate of the vector
     */
     public Vector scale(double number) {
         return new Vector(new Point3D(this._head.get_x().get()*number,
@@ -96,7 +96,7 @@ public final class Vector
     }
     
     /**
-    * function that do scalar multiplication
+    * return scalar multiplication
     */
     public double dotProduct(Vector other) {
         return (this._head.get_x().get()*other._head.get_x().get()) +
@@ -104,6 +104,9 @@ public final class Vector
                 (this._head.get_z().get()*other._head.get_z().get());
     }
 
+    /**
+    * return vector multiplication
+    */
     public Vector crossProduct(Vector other) {
         return new Vector(new Point3D(this._head.get_y().get()*other._head.get_z().get() - this._head.get_z().get()*other._head.get_y().get(),
                 this._head.get_z().get()*other._head.get_x().get() - this._head.get_x().get()*other._head.get_z().get() ,

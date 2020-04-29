@@ -17,8 +17,8 @@ public class Sphere extends RadialGeometry {
     }
 
     /**
-    *constructor 
-    *get double radius and point
+    * Sphere constructor 
+    * receiving double radius and point
     */
     
     public Sphere(double radius, Point3D point) {
@@ -27,8 +27,8 @@ public class Sphere extends RadialGeometry {
     }
 
     /**
-    *constructor 
-    *RadialGeometry radius and point
+    * Sphere constructor 
+    * receiving RadialGeometry radius and point
     */
     
     public Sphere(RadialGeometry _radial, Point3D point3D) {

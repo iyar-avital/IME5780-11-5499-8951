@@ -4,6 +4,7 @@ import primitives.Point3D;
 import primitives.Ray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Geometries implements Intersectable {
@@ -12,23 +13,21 @@ public class Geometries implements Intersectable {
 
     public Geometries()
     {
-        geo = new ArrayList<Intersectable>();
+        geo = new ArrayList<>();
     }
 
-    public Geometries(Intersectable ... geometries)
+    public Geometries(Intersectable ... _geometries)
     {
-        for(int i = 0; i< geometries.length; i++)
-        {
-            geo.add(geometries[i]);
-        }
+        geo = new ArrayList<>();
+        add(_geometries);
     }
 
     public void add(Intersectable ... geometries)
     {
-        for(int i = 0; i< geometries.length; i++)
-        {
-            geo.add(geometries[i]);
+        for (Intersectable g : geometries) {
+            geo.add(g);
         }
+      //  geo.addAll(Arrays.asList(geometries));
     }
 
     @Override

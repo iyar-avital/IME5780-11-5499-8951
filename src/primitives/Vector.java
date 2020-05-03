@@ -118,9 +118,11 @@ public final class Vector
     * return vector multiplication
     */
     public Vector crossProduct(Vector other) {
-        return new Vector(new Point3D(this._head.get_y().get()*other._head.get_z().get() - this._head.get_z().get()*other._head.get_y().get(),
-                this._head.get_z().get()*other._head.get_x().get() - this._head.get_x().get()*other._head.get_z().get() ,
-                this._head.get_x().get()*other._head.get_y().get() - this._head.get_y().get()*other._head.get_x().get()));
+        double w1 = this._head.get_y().get() * other._head.get_z().get() - this._head.get_z().get() * other.get_head().get_y().get();
+        double w2 = this._head.get_z().get() * other._head.get_x().get() - this._head.get_x().get() * other.get_head().get_z().get();
+        double w3 = this._head.get_x().get() * other._head.get_y().get() - this._head.get_y().get() * other.get_head().get_x().get();
+
+        return new Vector(new Point3D(w1, w2, w3));
     }
 
     /**

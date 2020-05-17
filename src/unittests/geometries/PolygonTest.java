@@ -1,7 +1,7 @@
 /**
  *
  */
-package unittests;
+package unittests.geometries;
 
 import static org.junit.Assert.*;
 

@@ -4,7 +4,7 @@ import primitives.Color;
 
 public class AmbientLight {
     Color _intensity;
-
+    
 /**
 constructor
 receiving Color i and double k
@@ -13,7 +13,7 @@ receiving Color i and double k
     {
         _intensity = i.scale(k);
     }
-
+    
 /**
 function thaet return intensity
 */

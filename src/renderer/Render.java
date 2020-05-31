@@ -1,14 +1,17 @@
 package renderer;
-
+import elements.LightSource;
+import geometries.Intersectable.GeoPoint;
 import elements.Camera;
+import geometries.Geometries;
 import geometries.Intersectable;
-import primitives.Color;
-import primitives.Point3D;
-import primitives.Ray;
+import primitives.*;
 import scene.Scene;
 
 import java.util.List;
 import java.util.Scanner;
+
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 public class Render {
     ImageWriter _imageWriter;
@@ -49,11 +52,11 @@ public class Render {
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
                 Ray ray = camera.constructRayThroughPixel(Nx, Ny, j, i, distance, width, height);
-                List<Point3D> intersectionPoints = geometries.findIntersections(ray);
+                List<Intersectable.GeoPoint> intersectionPoints = geometries.findIntersections(ray);
                 if (intersectionPoints == null)
                    _imageWriter.writePixel(j, i, background);
                 else {
-                    Point3D closestPoint = getClosestPoint(intersectionPoints);
+                    Intersectable.GeoPoint closestPoint = getClosestPoint(intersectionPoints);
                     _imageWriter.writePixel(j, i, calcColor(closestPoint).getColor());
                 }
             }
@@ -89,15 +92,15 @@ public class Render {
      *                           this list the closet point to P0 of the camera in the scene.
      * @return the closest point to the camera
      */
-    private Point3D getClosestPoint(List<Point3D> intersectionPoints) {
-        Point3D result = null;
+    private Intersectable.GeoPoint getClosestPoint(List<Intersectable.GeoPoint> intersectionPoints) {
+        Intersectable.GeoPoint result = null;
         double minDistance = Double.MAX_VALUE;
 
         Point3D p0 = this._scene.get_camera().getP0();
 
-        for (Point3D geo : intersectionPoints) {
-            Point3D pt = geo;
-            double distance = p0.distance(pt);
+        for (Intersectable.GeoPoint geo : intersectionPoints) {
+            Intersectable.GeoPoint pt = geo;
+            double distance = p0.distance(pt.getPoint());
             if (distance < minDistance) {
                 minDistance = distance;
                 result = geo;
@@ -109,10 +112,82 @@ public class Render {
     /**
      * Calculate the color intensity in a point
      *
-     * @param point intersection the point for which the color is required
+     * @param intersection intersection the point for which the color is required
      * @return the color intensity
      */
-    private Color calcColor(Point3D point) {
-        return _scene.get_ambientLight().get_intensity();
+    private Color calcColor(GeoPoint intersection) {
+        Color color = _scene.get_ambientLight().get_intensity();
+        color = color.add(intersection.getGeometry().get_emission());
+        Vector v = intersection.getPoint().subtract(_scene.get_camera().getP0()).normalize();
+        Vector n = intersection.getGeometry().getNormal(intersection.getPoint());
+        Material material =intersection.getGeometry().get_material();
+        int nShininess = material.get_nShininess();
+        double kd = material.get_kD();
+        double ks = material.get_kS();
+        for (LightSource lightSource : _scene.get_lights()) {
+            Vector l = lightSource.getL(intersection.getPoint());
+            double nl = alignZero(n.dotProduct(l));
+            double nv = alignZero(n.dotProduct(v));
+            if (sign(nl) == sign(nv))  {
+                Color lightIntensity = lightSource.getIntensity(intersection.getPoint());
+                color = color.add(calcDiffusive(kd, nl, lightIntensity),
+                        calcSpecular(ks, l, n, nl, v, nShininess, lightIntensity));
+            }
+        }
+        return color;
+    }
+
+    private boolean sign(double val) {
+        return (val > 0d);
+    }
+
+    /**
+     * Calculate Diffusive component of light reflection.
+     *
+     * @param kd diffusive component coef
+     * @param nl dot-product n*l
+     * @param ip light intensity at the point
+     * @return diffusive component of light reflection
+     * <p>
+     * The diffuse component is that dot product n•L. It approximates light, originally from light source L,
+     * reflecting from a surface which is diffuse, or non-glossy. One example of a non-glossysurface is paper.
+     * In general, you'll also want this to have a non-gray color value,
+     * so this term would in general be a color defined as: [rd,gd,bd](n•L)
+     * </p>
+     */
+    private Color calcDiffusive(double kd, double nl, Color ip) {
+        return ip.scale(Math.abs(nl) * kd);
+    }
+
+    /**
+     * Calculate Specular component of light reflection.
+     *
+     * @param ks         specular component coef
+     * @param l          direction from light to point
+     * @param n          normal to surface at the point
+     * @param nl         dot-product n*l
+     * @param V          direction from point of view to point
+     * @param nShininess shininess level
+     * @param ip         light intensity at the point
+     * @return specular component light effect at the point
+     * <p>
+     * Finally, the Phong model has a provision for a highlight, or specular, component, which reflects light in a
+     * shiny way. This is defined by [rs,gs,bs](-V.R)^p, where R is the mirror reflection direction vector we discussed
+     * in class (and also used for ray tracing), and where p is a specular power. The higher the value of p, the shinier
+     * the surface.
+     * </p>
+     */
+    private Color calcSpecular(double ks, Vector l, Vector n, double nl, Vector V, int nShininess, Color ip) {
+        double p = nShininess;
+        if (isZero(nl)) {
+            throw new IllegalArgumentException("nl cannot be Zero for scaling the normal vector");
+        }
+        Vector R = l.add(n.scale(-2 * nl)).normalize(); // nl must not be zero!
+        double VR = alignZero(V.dotProduct(R));
+        if (VR >= 0) {
+            return Color.BLACK; // view from direction opposite to r vector
+        }
+        // [rs,gs,bs]ks(-V.R)^p
+        return ip.scale(ks * Math.pow(-1d * VR, p));
     }
 }

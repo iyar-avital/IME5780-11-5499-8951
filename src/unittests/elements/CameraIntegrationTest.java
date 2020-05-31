@@ -22,7 +22,7 @@ public class CameraIntegrationTest extends Object {
     Plane plane;
     Ray ray;
     Triangle triangle;
-    List<Point3D> results = new ArrayList<>();
+    List<Intersectable.GeoPoint> results = new ArrayList<>();
 
     int nY = 3;
     int nX = 3;

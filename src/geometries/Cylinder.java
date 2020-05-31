@@ -1,6 +1,10 @@
 package geometries;
 
+import primitives.Color;
+import primitives.Material;
 import primitives.Ray;
+
+import java.awt.event.MouseAdapter;
 
 public class Cylinder extends Tube {
 
@@ -10,21 +14,33 @@ public class Cylinder extends Tube {
         return _height;
     }
 
-    /**
-    * constructor
-    * receiving double radius, ray and height
-    */
-    public Cylinder(double radius, Ray axisRay, double height) {
-        super(radius, axisRay);
+    public Cylinder(Color color, Material material, double radius, Ray axisRay, double height) {
+        super(color, material, radius, axisRay);
         _height = height;
     }
-    
+
+    public Cylinder(Color color, double radius, Ray axisRay, double height) {
+        this(color, new Material(0,0,0), radius, axisRay, height);
+    }
+
     /**
-    * constructor
-    * receiving radialGeometry radius, ray and height
-    */
-    public Cylinder(RadialGeometry _radial, Ray axisRay, double height) {
-        super(_radial, axisRay);
+     * constructor
+     * receiving double radius, ray and height
+     */
+    public Cylinder(double radius, Ray axisRay, double height) { this(Color.BLACK, radius, axisRay, height); }
+
+    public Cylinder(Color color, Material material, RadialGeometry _radial, Ray axisRay, double height) {
+        super(color, material, _radial, axisRay);
         _height = height;
     }
+
+    public Cylinder(Color color, RadialGeometry _radial, Ray axisRay, double height) {
+        this(color, new Material(0,0,0), _radial, axisRay, height);
+    }
+
+        /**
+         * constructor
+         * receiving radialGeometry radius, ray and height
+         */
+    public Cylinder(RadialGeometry radius, Ray axisRay, double height) { this(Color.BLACK, radius, axisRay, height); }
 }

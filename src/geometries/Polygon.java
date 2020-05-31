@@ -10,7 +10,7 @@ import static primitives.Util.*;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -41,7 +41,8 @@ public class Polygon implements Geometry {
      *                                  <li>The polygon is concave (not convex></li>
      *                                  </ul>
      */
-    public Polygon(Point3D... vertices) {
+    public Polygon(Color color, Material material, Point3D... vertices) {
+        super(color, material);
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         _vertices = List.of(vertices);
@@ -80,13 +81,21 @@ public class Polygon implements Geometry {
         }
     }
 
+    public Polygon(Color color, Point3D... vertices) {
+        this(color, new Material(0,0,0), vertices);
+    }
+
+    public Polygon(Point3D... vertices) {
+        this(Color.BLACK, vertices);
+    }
+
     @Override
     public Vector getNormal(Point3D point) {
         return _plane.getNormal();
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         return null;
     }
 }

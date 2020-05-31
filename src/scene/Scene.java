@@ -2,9 +2,13 @@ package scene;
 
 import elements.AmbientLight;
 import elements.Camera;
+import elements.LightSource;
 import geometries.Geometries;
 import geometries.Intersectable;
 import primitives.Color;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Scene class
@@ -34,7 +38,10 @@ public class Scene {
      * the distance betwwen the camera and view
      */
     private double _distance;
-
+    /**
+     * all ths lights in scene
+     */
+    private List<LightSource> _lights;
     /**
      * scene constructor received the name scene
      * @param name - the scene name
@@ -43,7 +50,9 @@ public class Scene {
     {
         _name = name;
         _geometries = new Geometries();
+        _lights = new LinkedList<LightSource>();
     }
+
     public String get_name() {
         return _name;
     }
@@ -59,6 +68,16 @@ public class Scene {
     public Geometries get_geometries() {
         return _geometries;
     }
+
+    public Camera get_camera() {
+        return _camera;
+    }
+
+    public double get_distance() {
+        return _distance;
+    }
+
+    public List<LightSource> get_lights() { return _lights; }
 
     public void set_background(Color _backGround) {
         this._backGround = _backGround;
@@ -76,16 +95,15 @@ public class Scene {
         this._distance = _distance;
     }
 
-    public Camera get_camera() {
-        return _camera;
-    }
 
-    public double get_distance() {
-        return _distance;
+    public void addGeometries(Intersectable... geometries) {
+        for (Intersectable g : geometries) {
+            _geometries.add(g);
+        }
     }
-
-    public void addGeometries(Intersectable... geometries)
-    {
-        _geometries.add(geometries);
+    public void addLights(LightSource ... lights) {
+        for (LightSource l : lights) {
+            _lights.add(l);
+        }
     }
 }

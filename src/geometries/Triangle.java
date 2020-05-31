@@ -10,17 +10,33 @@ import static primitives.Util.isZero;
  * triangle class
  */
 public class Triangle extends Polygon {
-
+    /**
+     * triangle constructor
+     * @param color triangle color
+     * @param material triangle material
+     * @param p1 first vertex
+     * @param p2 second vertex
+     * @param p3 third vertex
+     */
     public Triangle(Color color, Material material, Point3D p1, Point3D p2, Point3D p3) {
         super(color, material, new Point3D[]{p1, p2, p3});
     }
 
+    /**
+     * triangle constructor
+     * call the another constructor with material, (0,0,0)
+     * @param color triangle color
+     * @param p1 first vertex
+     * @param p2 second vertex
+     * @param p3 third vertex
+     */
     public Triangle(Color color, Point3D p1, Point3D p2, Point3D p3) {
         super(color, new Point3D[]{p1, p2, p3});
     }
 
     /**
      * triangle constructor
+     * call the another constructor with color, BLACK
      * @param p1 - first vertex
      * @param p2 - second vertex
      * @param p3 - third vertex

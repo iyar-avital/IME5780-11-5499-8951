@@ -4,10 +4,28 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
 
+/**
+ * point Light class
+ */
 public class PointLight extends Light implements LightSource {
+    /**
+     * the point from it start the light
+     */
     protected Point3D _position;
+
+    /**
+     * Attenuation coefficients
+     */
     protected double _kC, _kL, _kQ;
 
+    /**
+     * point Light constructor
+     * @param i the color of the light
+     * @param _position the start light point
+     * @param _kC it is simple kc
+     * @param _kL it is simple kl
+     * @param _kQ it is simple kq
+     */
     public PointLight(Color i, Point3D _position, double _kC, double _kL, double _kQ) {
         super(i);
         this._position = new Point3D(_position);

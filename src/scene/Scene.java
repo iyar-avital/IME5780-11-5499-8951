@@ -95,12 +95,20 @@ public class Scene {
         this._distance = _distance;
     }
 
-
+    /**
+     * receive geometries and add its to the list - geometries in the scene
+     * @param geometries all the geometries to add to list
+     */
     public void addGeometries(Intersectable... geometries) {
         for (Intersectable g : geometries) {
             _geometries.add(g);
         }
     }
+
+    /**
+     * receive lifhts and add its to the list - lights in the scene
+     * @param lights all the lights to add to list
+     */
     public void addLights(LightSource ... lights) {
         for (LightSource l : lights) {
             _lights.add(l);

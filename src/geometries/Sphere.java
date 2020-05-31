@@ -9,39 +9,84 @@ import static primitives.Util.alignZero;
 
 public class Sphere extends RadialGeometry {
 
+    /**
+     * center point in the sphere
+     */
     private Point3D _center;
 
+    /**
+     * getter- center
+     * @return center point in the sphere
+     */
     public Point3D get_center() {
         return new Point3D(_center);
     }
 
-
+    /**
+     * Sphere constructor
+     * receiving color, material, double radius and point
+     * @param color sphere color
+     * @param material sphere material
+     * @param radius double radius
+     * @param point center sphere point
+     */
     public Sphere(Color color, Material material, double radius, Point3D point) {
         super(color, material, radius);
         _center = new Point3D(point);
     }
 
+    /**
+     * Sphere constructor
+     * receiving color, double radius and point
+     * call the another constructor with material, (0,0,0)
+     * @param color sphere color
+     * @param radius double radius
+     * @param point center sphere point
+     */
     public Sphere(Color color, double radius, Point3D point) {
         this(color, new Material(0,0,0), radius, point);
     }
-        /**
-         * Sphere constructor
-         * receiving double radius and point
-         */
+
+    /**
+     * Sphere constructor
+     * receiving double radius and point
+     * call the another constructor with color, BLACK
+     * @param radius double radius
+     * @param point center sphere point
+     */
     public Sphere(double radius, Point3D point) { this(Color.BLACK, radius, point);}
 
-
+    /**
+     * Sphere constructor
+     * receiving color, material, double radius and point
+     * @param color sphere color
+     * @param material sphere material
+     * @param _radial double radius
+     * @param point3D center sphere point
+     */
     public Sphere(Color color, Material material, RadialGeometry _radial, Point3D point3D) {
         super(color, material, _radial);
         _center = new Point3D(point3D);
     }
 
+    /**
+     * Sphere constructor
+     * receiving color, double radius and point
+     * call the another constructor with material, (0,0,0)
+     * @param color sphere color
+     * @param _radial Radial Geometry radius
+     * @param point3D center sphere point
+     */
     public Sphere(Color color, RadialGeometry _radial, Point3D point3D) {
         this(color, new Material(0,0,0), _radial, point3D);
     }
+
     /**
      * Sphere constructor
-     * receiving RadialGeometry radius and point
+     * receiving double radius and point
+     * call the another constructor with color, BLACK
+     * @param radius Radial Geometry radius
+     * @param point center sphere point
      */
     public Sphere(RadialGeometry radius, Point3D point) { this(Color.BLACK, radius, point);}
 

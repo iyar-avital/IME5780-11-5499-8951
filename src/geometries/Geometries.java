@@ -7,21 +7,39 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Geometries class, have one field with a list of geometries
+ */
 public class Geometries implements Intersectable {
 
+    /**
+     * the list of geometries
+     */
     private List<Intersectable> _geo;
 
+    /**
+     * empty constructor
+     */
     public Geometries()
     {
         _geo = new ArrayList<>();
     }
 
+    /**
+     * Geometries constructor
+     * receive geometries and add its to the list
+     * @param _geometries all the geometries to add to list
+     */
     public Geometries(Intersectable ... _geometries)
     {
         _geo = new ArrayList<>();
         add(_geometries);
     }
 
+    /**
+     * receive geometries and add its to the list
+     * @param geometries all the geometries to add to list
+     */
     public void add(Intersectable ... geometries)
     {
         for (Intersectable g : geometries) {

@@ -14,6 +14,8 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 public class Render {
+    private static final double DELTA = 0.1;
+
     ImageWriter _imageWriter;
     Scene _scene;
 
@@ -67,6 +69,7 @@ public class Render {
      * Printing the grid with a fixed interval between lines
      *
      * @param interval The interval between the lines.
+     * @param colorsep color
      */
     public void printGrid(int interval, java.awt.Color colorsep) {
         double rows = this._imageWriter.getNy();

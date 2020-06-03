@@ -84,8 +84,9 @@ public class Tube extends RadialGeometry {
     public Tube(RadialGeometry radius, Ray axisRay) { this(Color.BLACK, radius, axisRay); }
 
     /**
-    *function that return the ray 
-    */
+     * function that return the ray
+     * @return _axisRay
+     */
     public Ray get_axisRay() {
         return new Ray(_axisRay);
     }

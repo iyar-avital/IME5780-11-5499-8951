@@ -1,3 +1,10 @@
 com.iyar
+elements
 geometries
 primitives
+renderer
+scene
+unittests.elements
+unittests.geometries
+unittests.primitives
+unittests.renderer

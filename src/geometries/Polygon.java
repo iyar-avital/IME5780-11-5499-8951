@@ -23,7 +23,8 @@ public class Polygon extends Geometry {
     /**
      * Polygon constructor based on vertices list. The list must be ordered by edge
      * path. The polygon must be convex.
-     *
+     * @param color
+     * @param material
      * @param vertices list of vertices according to their order by edge path
      * @throws IllegalArgumentException in any case of illegal combination of
      *                                  vertices:
@@ -38,7 +39,7 @@ public class Polygon extends Geometry {
      *                                  <li>Three consequent vertices lay in the
      *                                  same line (180&#176; angle between two
      *                                  consequent edges)
-     *                                  <li>The polygon is concave (not convex></li>
+     *                                  <li>The polygon is concave (not convex)</li>
      *                                  </ul>
      */
     public Polygon(Color color, Material material, Point3D... vertices) {

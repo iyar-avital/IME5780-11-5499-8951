@@ -10,6 +10,7 @@ import static primitives.Util.isZero;
 
 public final class Ray
 {
+    private static final double DELTA = 0.1;
     /**
      * A Ray is represented by a vector and point.
      * the vector is the direction of the ray
@@ -47,6 +48,16 @@ public final class Ray
     public Ray(Ray ray) {
         this._direction = new Vector(ray._direction);
         this._poo = new Point3D(ray._poo);
+    }
+
+    public Ray(Point3D point, Vector direction, Vector normal) {
+        //point + normal.scale(±DELTA)
+        _direction = new Vector(direction).normalized();
+
+        double nv = normal.dotProduct(direction);
+
+        Vector normalDelta = normal.scale((nv > 0 ? DELTA : -DELTA));
+        _poo = point.add(normalDelta);
     }
 
     /**

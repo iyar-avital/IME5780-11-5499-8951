@@ -15,7 +15,7 @@ abstract class Light {
      * light constructor
      * @param color the light color
      */
-    public Light(Color color) { _intensity = color; }
+    public Light(Color color) { _intensity = new Color(color); }
 
     /**
      * @return the color - 'intensity' of the light

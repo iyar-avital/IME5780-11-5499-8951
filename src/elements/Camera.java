@@ -86,7 +86,7 @@ public class Camera {
      * @param i - location of current pixel in the column
      * @param screenDistance - the distance between the camera and view plane
      * @param screenWidth - the width plane in cm
-     * @param screenHeight - the width plane in cm
+     * @param screenHeight - the height plane in cm
      * @return the ray from the starting point to current pixel
      */
     public Ray constructRayThroughPixel(int nX, int nY,

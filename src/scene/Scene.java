@@ -5,7 +5,6 @@ import elements.Camera;
 import elements.LightSource;
 import geometries.Geometries;
 import geometries.Intersectable;
-import primitives.Color;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class Scene {
     /**
      * background in scene
      */
-    private Color _backGround;
+    private primitives.Color _backGround;
     /**
      * ambientLight in scene
      */
@@ -57,8 +56,8 @@ public class Scene {
         return _name;
     }
 
-    public Color get_background() {
-        return new Color(_backGround);
+    public primitives.Color get_background() {
+        return new primitives.Color(_backGround);
     }
 
     public AmbientLight get_ambientLight() {
@@ -79,7 +78,7 @@ public class Scene {
 
     public List<LightSource> get_lights() { return _lights; }
 
-    public void set_background(Color _backGround) {
+    public void set_background(primitives.Color _backGround) {
         this._backGround = _backGround;
     }
 

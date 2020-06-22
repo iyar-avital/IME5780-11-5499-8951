@@ -5,6 +5,7 @@ import primitives.Material;
 import primitives.Ray;
 
 import java.awt.event.MouseAdapter;
+import java.util.List;
 
 /**
  * Cylinder class. extend tube and have a final height
@@ -95,4 +96,9 @@ public class Cylinder extends Tube {
      * @param height height
      */
     public Cylinder(RadialGeometry radius, Ray axisRay, double height) { this(Color.BLACK, radius, axisRay, height); }
+
+    @Override
+    public List<GeoPoint> findIntersections(Ray ray) {
+        return super.findIntersections(ray);
+    }
 }

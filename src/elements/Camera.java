@@ -4,6 +4,9 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * camera class
  */
@@ -64,7 +67,7 @@ public class Camera {
      * @param vTo - one vector
      * @param vUp - the second vector
      */
-    public Camera(Point3D p0, Vector vTo, Vector vUp )
+    public Camera(Point3D p0, Vector vTo, Vector vUp)
     {
         if(vTo.dotProduct(vUp) != 0)
             throw new IllegalArgumentException("the vector must be vertical");
@@ -111,4 +114,74 @@ public class Camera {
 
         return new Ray(_p0, vIJ);
     }
+
+
+    /**
+     * calculate all the rays from the camera starting point to current pixel (j,i)
+     * in (i,j) we "create" a grid 9X9 and calculate all the 81 rays from this one pixel!
+     * the difference between this function to constructRayThroughPixel:
+     * in this function we have 2 iterators that create the grid,
+     * build a ray for all 1/9*1/9 pixel, and return all the rays.
+     * @param nX - number of pixels in x axis
+     * @param nY - number of pixels in y axis
+     * @param j - location of current pixel in the row
+     * @param i - location of current pixel in the column
+     * @param screenDistance - the distance between the camera and view plane
+     * @param screenWidth - the width plane in cm
+     * @param screenHeight - the width plane in cm
+     * @return list of ray from the camera to one pixel
+     *
+     */
+    public List<Ray> constructRaysThroughPixel(int nX, int nY,
+                                              int j, int i, double screenDistance,
+                                              double screenWidth, double screenHeight)
+    {
+        Point3D Pc = _p0.add(_vTo.scale(screenDistance));
+        double Ry = screenHeight/nY;
+        double Rx = screenWidth/nX;
+
+        double yi;
+        double xj;
+
+        Vector vIJ;
+        Ray myRay;
+        List<Ray> allTheRays = new ArrayList<>();
+
+        for(double rows = j; rows < j + 1; rows = rows + (1d/9)) {
+            for (double columns = i; columns < i + 1; columns = columns + (1d/9)) {
+                Point3D pIJ = new Point3D(Pc);
+
+                yi = ((columns - nY / 2.0) * Ry + Ry / 2);
+                xj = (rows - nX / 2.0) * Rx + Rx / 2;
+
+
+                if (xj != 0) {
+                    pIJ = pIJ.add(_vRight.scale(xj));
+                }
+
+                if (yi != 0) {
+                    pIJ = pIJ.add(_vUp.scale(-yi));
+                }
+                vIJ = pIJ.subtract(_p0);
+                myRay = new Ray(_p0, vIJ);
+                allTheRays.add(myRay);
+            }
+        }
+        return allTheRays;
+//        double yi = ((i-nY/2.0) * Ry + Ry/2);
+//        double xj = (j-nX/2.0) * Rx + Rx/2;
+//
+//        Point3D pIJ = new Point3D(Pc);
+//
+//        if (xj != 0) {
+//            pIJ = pIJ.add(_vRight.scale(xj));
+//        }
+//
+//        if (yi != 0) {
+//            pIJ = pIJ.add(_vUp.scale(-yi));
+//        }
+//        Vector vIJ = pIJ.subtract(_p0);
+//        Ray(_p0, vIJ);
+    }
+
 }

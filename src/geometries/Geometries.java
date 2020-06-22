@@ -45,7 +45,6 @@ public class Geometries implements Intersectable {
         for (Intersectable g : geometries) {
             _geo.add(g);
         }
-      //  geo.addAll(Arrays.asList(geometries));
     }
 
     @Override

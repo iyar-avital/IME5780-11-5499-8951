@@ -39,7 +39,7 @@ public class RenderTests {
                 new Triangle(new Point3D(-100, 0, 100), new Point3D(0, -100, 100), new Point3D(-100, -100, 100)));
 
         ImageWriter imageWriter = new ImageWriter("base render test", 500, 500, 500, 500);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();;
 
         render.renderImage();
         render.printGrid(50, java.awt.Color.YELLOW);

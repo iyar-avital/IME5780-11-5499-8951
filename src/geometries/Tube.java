@@ -110,6 +110,43 @@ public class Tube extends RadialGeometry {
 
     @Override
     public List<GeoPoint> findIntersections(Ray ray) {
-        return null;
+        Vector vTube = _axisRay.get_direction();
+        Vector vectorV0;
+        Vector vXvTube;
+        Vector rayDirXvTube;
+        try {
+            vectorV0 = ray.get_poo().subtract(_axisRay.get_poo());
+        } catch (IllegalArgumentException e) {
+            vectorV0 = new Vector(0, 0, 0);
+        }
+        try {
+            rayDirXvTube = vectorV0.crossProduct(vTube);
+        } catch (IllegalArgumentException e) {
+            rayDirXvTube = new Vector(0, 0, 0);
+        }
+        try {
+            vXvTube = ray.get_direction().crossProduct(vTube);
+        } catch (IllegalArgumentException e) {
+            vXvTube = new Vector(0, 0, 0);
+        }
+
+        double vTube2 = Util.alignZero(vTube.lengthSquared());
+        double a = Util.alignZero(vXvTube.lengthSquared());
+        double b = Util.alignZero(2 * vXvTube.dotProduct(rayDirXvTube));
+        double c = Util.alignZero(rayDirXvTube.lengthSquared() - (_radius * _radius * vTube2));
+        double d = Util.alignZero(b * b - 4 * a * c);
+        if (d < 0) return null;
+        if (a == 0)
+            return null;
+        double t1 = Util.alignZero((-b - Math.sqrt(d)) / (2 * a));
+        double t2 = Util.alignZero((-b + Math.sqrt(d)) / (2 * a));
+        if (t1 <= 0 && t2 <= 0) return null;
+        if (t1 > 0 && t2 > 0)
+            return List.of(new GeoPoint(this, ray.getTargetPoint(t1)), new GeoPoint(this, ray.getTargetPoint(t2)));
+        if (t1 > 0)
+            return List.of(new GeoPoint(this, ray.getTargetPoint(t1)));
+        else
+            return List.of(new GeoPoint(this, ray.getTargetPoint(t2)));
     }
+
 }

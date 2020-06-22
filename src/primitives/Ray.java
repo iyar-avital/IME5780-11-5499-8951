@@ -97,4 +97,5 @@ public final class Ray
         return "_direction=" + _direction +
                 ", _poo=" + _poo;
     }
+
 }

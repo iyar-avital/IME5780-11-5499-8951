@@ -1,5 +1,7 @@
 package renderer;
+import com.sun.jdi.connect.spi.TransportService;
 import elements.LightSource;
+import geometries.Geometry;
 import geometries.Intersectable.GeoPoint;
 import elements.Camera;
 import geometries.Geometries;
@@ -15,11 +17,28 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 public class Render {
+
+    enum whatToRun { regular, nimiProject1, miniProject2 };
     /**
      * a const that we raise the ray with it, in order to tha ray dosent cut itself
      */
     private static final double DELTA = 0.1;
+
+    /**
+     * numOfRaysForSuperSampling - number of rays for super sampling
+     */
+    private int maxRaysForSuperSampling = 100;
+
+    private whatToRun whoNow = whatToRun.regular;
+
+    /**
+     * MAX_CALC_COLOR_LEVEL - maximum level in the recursion three
+     */
     private static final int MAX_CALC_COLOR_LEVEL = 10;
+
+    /**
+     * MIN_CALC_COLOR_K - stopping calculate color at this value of k
+     */
     private static final double MIN_CALC_COLOR_K = 0.001;
 
     private ImageWriter _imageWriter;
@@ -29,13 +48,22 @@ public class Render {
         this._scene = _scene;
     }
 
-    public Render(ImageWriter imageWriter, Scene scene) {
+    public Render(ImageWriter imageWriter, Scene scene, whatToRun w) {
         this._imageWriter = imageWriter;
         this._scene = scene;
+        this.whoNow = w;
     }
 
     public Scene get_scene() {
         return _scene;
+    }
+
+    /**
+     * numOfRays - setNumOfRays
+     * set the number of rays in each pixel
+     */
+    public void setMaxRaysForSuperSampling(int maxRaysForSuperSampling) {
+        this.maxRaysForSuperSampling = maxRaysForSuperSampling;
     }
 
     /**
@@ -63,13 +91,22 @@ public class Render {
             threads[i] = new Thread(() -> {
                 Pixel pixel = new Pixel(); // Auxiliary thread’s pixel object
                 while (thePixel.nextPixel(pixel)) {
-//                    Ray rays = camera.constructRayThroughPixel(Nx, Ny, pixel.col, pixel.row, distance, width, height);
-//                    GeoPoint closestPoint = findCLosestIntersection(rays);
-//                    _imageWriter.writePixel(pixel.col, pixel.row, closestPoint == null ? background : calcColor(closestPoint, rays).getColor());
-
-                    List<Ray> rays = camera.constructRaysThroughPixel(Nx, Ny, pixel.col, pixel.row, distance, width, height);
-                    _imageWriter.writePixel(pixel.col, pixel.row, calcColor(rays).getColor());
-
+                    switch (whoNow)
+                    {
+                        case regular:
+                            Ray rays = camera.constructRayThroughPixel(Nx, Ny, pixel.col, pixel.row, distance, width, height);
+                            GeoPoint closestPoint = findCLosestIntersection(rays);
+                            _imageWriter.writePixel(pixel.col, pixel.row, closestPoint == null ? background : calcColor(closestPoint, rays).getColor());
+                        case nimiProject1:
+                            List<Ray> ray = camera.constructRayThroughPixelMINI1(Nx, Ny, pixel.col, pixel.row, distance, width, height,9);
+                            _imageWriter.writePixel(pixel.col, pixel.row, calcColorMINI1(ray).getColor());
+                        case miniProject2:
+                            try {
+                                Color adaptiveColor = AdaptiveSuperSampling(Nx, Ny, pixel.col, pixel.row, distance, width, height, maxRaysForSuperSampling);
+                                _imageWriter.writePixel(pixel.col, pixel.row, adaptiveColor.getColor());
+                            } catch (Exception e) {}
+                        default: {};
+                    }
                 }});
         }
         for (Thread thread : threads) thread.start(); // Start all the threads
@@ -158,22 +195,16 @@ public class Render {
         return closestPoint;
     }
 
-    private Color calcColor(GeoPoint geopoint, Ray inRay) {
-        return calcColor(geopoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0).add(
-                _scene.get_ambientLight().get_intensity());
-    }
-
     /**
      *
      * @param rays list of ray to find closes intersection from this rays
      * @return the average color from all the get closes points color
      */
-    private Color calcColor(List<Ray> rays)
+    private Color calcColorMINI1(List<Ray> rays)
     {
-
-        Color x=Color.BLACK;
+        Color x = Color.BLACK;
         for(Ray r:rays){
-            GeoPoint p= findCLosestIntersection(r);
+            GeoPoint p = findCLosestIntersection(r);
             if(p==null)
                 x=x.add(_scene.get_background());
             else
@@ -186,7 +217,17 @@ public class Render {
     /**
      * Calculate the color intensity in a point
      *
-     * @param intersection intersection the point for which the color is required
+     * @param geopoint intersection the point for which the color is required
+     * @return the color intensity
+     */
+    private Color calcColor(GeoPoint geopoint, Ray inRay) {
+        return calcColor(geopoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0).add(
+                _scene.get_ambientLight().get_intensity());
+    }
+
+    /**
+     * Calculate the color intensity in a point
+     * @param intersection the point for which the color is required
      * @return the color intensity
      */
     private Color calcColor(GeoPoint intersection, Ray inRay, int level, double k) {
@@ -365,8 +406,8 @@ public class Render {
         private long _maxRows = 0; // Ny
         private long _maxCols = 0; // Nx
         private long _pixels = 0; // Total number of pixels: Nx*Ny
-        public volatile int row = 0; // Last processed row
-        public volatile int col = -1; // Last processed column
+        public volatile int row = 0; // Last processed row (j)
+        public volatile int col = -1; // Last processed column (i)
         private long _counter = 0; // Total number of pixels processed
         private int _percents = 0; // Percent of pixels processed
         private long _nextCounter = 0; // Next amount of processed pixels for percent progress
@@ -442,4 +483,92 @@ public class Render {
             return -1;
         }
     }
+
+    public primitives.Color AdaptiveSuperSampling(int nX, int nY, int j, int i, double screenDistance, double screenWidth, double screenHeight, int numOfRays) throws Exception {
+        Camera camera = _scene.get_camera();
+        Vector Vright = camera.getV_right();
+        Vector Vup = camera.getV_up();
+        //start point in camera
+        Point3D cameraLoc = camera.getP0();
+        int numOfRaysInRowCol = (int)Math.ceil(Math.sqrt(numOfRays));
+        //if the max ray == 1, call to constructRayThroughPixel that received one ray, and send this ray to calcolor
+        if(numOfRaysInRowCol == 1)
+            return calcColor(camera.constructRayThroughPixel(nX, nY, j, i, screenDistance, screenWidth,screenHeight));
+        Point3D Pc;
+        //we want point of center pixel in the view plane
+        if (screenDistance != 0)
+            Pc = cameraLoc.add(camera.getV_to().scale(screenDistance));
+        else
+            Pc = cameraLoc;
+        Point3D Pij = Pc;
+        //the length of the height for ont pixel
+        double Ry = screenHeight/nY;
+        //the length of the width for ont pixel
+        double Rx = screenWidth/nX;
+
+        double Yi= (i - (nY/2d))*Ry + Ry/2d;
+        double Xj= (j - (nX/2d))*Rx + Rx/2d;
+
+        if(Xj != 0) Pij = Pij.add(Vright.scale(-Xj)) ;
+        if(Yi != 0) Pij = Pij.add(Vup.scale(-Yi));
+
+        double PRy = Ry/numOfRaysInRowCol;
+        double PRx = Rx/numOfRaysInRowCol;
+        return AdaptiveSuperSamplingRec(Pij, Rx, Ry, PRx, PRy,cameraLoc,Vright, Vup);
+    }
+
+
+    private primitives.Color AdaptiveSuperSamplingRec(Point3D centerP, double Width, double Height, double minWidth, double minHeight, Point3D cameraLoc,Vector Vright,Vector Vup) throws Exception {
+        //4 point "קצוות" of the pixel quarters
+        Point3D corner1 = centerP.add(Vright.scale(Width / 2)).add(Vup.scale(-Height / 2)),
+                corner2 = centerP.add(Vright.scale(Width / 2)).add(Vup.scale(Height / 2)),
+                corner3 = centerP.add(Vright.scale(-Width / 2)).add(Vup.scale(-Height / 2)),
+                corner4 = centerP.add(Vright.scale(-Width / 2)).add(Vup.scale(Height / 2));
+        //create a ray from the camera point, the direction is the vector from the center of quarter to camera point
+        Ray     ray1 = new Ray(cameraLoc, corner1.subtract(cameraLoc)),
+                ray2 = new Ray(cameraLoc, corner2.subtract(cameraLoc)),
+                ray3 = new Ray(cameraLoc, corner3.subtract(cameraLoc)),
+                ray4 = new Ray(cameraLoc, corner4.subtract(cameraLoc));
+
+        //calculate the color of all the ray
+        primitives.Color color1= calcColor(ray1),
+                color2= calcColor(ray2),
+                color3= calcColor(ray3),
+                color4= calcColor(ray4);
+
+        //checks the Recursion stop conditions, if the recursion is to be stopped we will return an average of the colors
+        if(Width <= minWidth || Height <= minHeight)
+            return color1.add(color2, color3, color4).reduce(4);
+
+        //Checks if the 4 rays on the edge have a same color. if the answer is true- we will return an average of the colors
+        //Why don't we return one of the colors? that is our secret
+        if (color1.same(color2)&& color1.same(color3)&& color1.same(color4))
+            return color1.add(color2).add(color3).add(color4).reduce(4);
+
+        //if the color of rays are not same- we calculate the center quarters point
+        Point3D centerP1 = centerP.add(Vright.scale(Width / 4)).add(Vup.scale(-Height / 4)),
+                centerP2 = centerP.add(Vright.scale(Width / 4)).add(Vup.scale(Height / 4)),
+                centerP3 = centerP.add(Vright.scale(-Width / 4)).add(Vup.scale(-Height / 4)),
+                centerP4 = centerP.add(Vright.scale(-Width / 4)).add(Vup.scale(Height / 4));
+
+
+
+        return AdaptiveSuperSamplingRec(centerP1, Width/2,  Height/2,  minWidth,  minHeight ,  cameraLoc, Vright, Vup).add(
+                AdaptiveSuperSamplingRec(centerP2, Width/2,  Height/2,  minWidth,  minHeight ,  cameraLoc, Vright, Vup),
+                AdaptiveSuperSamplingRec(centerP3, Width/2,  Height/2,  minWidth,  minHeight ,  cameraLoc, Vright, Vup),
+                AdaptiveSuperSamplingRec(centerP4, Width/2,  Height/2,  minWidth,  minHeight ,  cameraLoc, Vright, Vup)
+        ).reduce(4);
+
+    }
+
+    private primitives.Color calcColor(Ray ray) throws Exception {
+        GeoPoint gp;
+        gp = findCLosestIntersection(ray);
+        if(gp == null)
+            return this._scene.get_background();
+        else
+            return calcColor(gp, ray);
+    }
+
+
 }

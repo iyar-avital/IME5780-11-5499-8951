@@ -2,6 +2,7 @@ package unittests.renderer;
 
 import geometries.Plane;
 
+import geometries.Polygon;
 import org.junit.Test;
 
 import elements.*;
@@ -117,21 +118,17 @@ public class ReflectionRefractionTests {
 
         scene.addGeometries(
                 new Sphere(new Color(0, 128, 69), new Material(0.8, 0.9, 200,0,0.7), 450, new Point3D(-1020, 0, 1100)),
-                //new Sphere(new Color(32, 32, 32), new Material(0.8, 0.8, 200, 0,0.7), 300, new Point3D(0, 300, 900)),
-                //new Sphere(new Color(114, 107, 100), new Material(1, 0.8, 900, 0,1), 200, new Point3D(1000, 650, 640)),
                 new Sphere(new Color(63, 150, 20), new Material(0.8, 0.25, 120, 0, 0.7), 500, new Point3D(1000, -150, 1100)),
                 new Sphere(new Color (51, 200, 51) ,new Material(0.85, 0.25, 700, 0, 0.7), 600, new Point3D(-100, -700, 1600)),
                 new Plane(new Color(java.awt.Color.black), new Material(0.4, 0.3, 20000, 0, 0.4), new Point3D(1500, 1500, 0),
                         new Point3D(-1500, -1500, 3850), new Point3D(-1500, 1500, 0)));
-
-
 
         scene.addLights(new SpotLight(new Color(1020, 400, 400),  new Point3D(0, 300, -400),
                 new Vector(-1, 1, 4), 1, 0.00001, 0.000005),new SpotLight(new Color(20, 40, 0),  new Point3D(800, 100, -300),
                 new Vector(-1, 1, 4), 1, 0.00001, 0.000005),new SpotLight(new Color(1020, 400, 400),  new Point3D(-800, 100, -300),
                 new Vector(-1, 1, 4), 1, 0.00001, 0.000005),new DirectionalLight(new Color(java.awt.Color.darkGray),   new Vector(-0.5, 0.5, 0)) );
 
-        ImageWriter imageWriter = new ImageWriter("myAmazingImage1", 2500, 2500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("myAmazingImage7", 2500, 2500, 500, 500);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
@@ -139,7 +136,7 @@ public class ReflectionRefractionTests {
     }
 
     @Test
-    public void myAmazingImage2()
+    public void myAmazingImage3()
     {
         Scene scene = new Scene("Test scene");
         scene.set_camera(new Camera(new Point3D(50, 100, -11000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
@@ -148,11 +145,9 @@ public class ReflectionRefractionTests {
         scene.set_ambientLight(new AmbientLight(new Color(0, 120, 256), 0.1));
 
         scene.addGeometries(
-                new Sphere(new Color(0, 128, 69), new Material(0.8, 0.9, 200,0,0.7), 450, new Point3D(-1020, 0, 1100)),
-                //new Sphere(new Color(32, 32, 32), new Material(0.8, 0.8, 200, 0,0.7), 300, new Point3D(0, 300, 900)),
-                //new Sphere(new Color(114, 107, 100), new Material(1, 0.8, 900, 0,1), 200, new Point3D(1000, 650, 640)),
-                new Sphere(new Color(63, 150, 20), new Material(0.8, 0.25, 120, 0, 0.7), 500, new Point3D(1000, -150, 1100)),
-                new Sphere(new Color (51, 200, 51) ,new Material(0.85, 0.25, 700, 0, 0.7), 600, new Point3D(-100, -700, 1600)),
+                new Sphere(new Color(0, 0, 128), new Material(0.8, 0.9, 200,0,0.7), 450, new Point3D(-1020, 0, 1100)),
+                new Sphere(new Color(0, 128, 0), new Material(0.8, 0.9, 200,0,0.7), 450, new Point3D(1020, 0, 1100)),
+                new Sphere(new Color(128, 0, 0), new Material(0.8, 0.9, 200,0,0.7), 450, new Point3D(0, 0, 1100)),
                 new Plane(new Color(java.awt.Color.black), new Material(0.4, 0.3, 20000, 0, 0.4), new Point3D(1500, 1500, 0),
                         new Point3D(-1500, -1500, 3850), new Point3D(-1500, 1500, 0)));
 
@@ -163,7 +158,7 @@ public class ReflectionRefractionTests {
                 new Vector(-1, 1, 4), 1, 0.00001, 0.000005),new SpotLight(new Color(1020, 400, 400),  new Point3D(-800, 100, -300),
                 new Vector(-1, 1, 4), 1, 0.00001, 0.000005),new DirectionalLight(new Color(java.awt.Color.darkGray),   new Vector(-0.5, 0.5, 0)) );
 
-        ImageWriter imageWriter = new ImageWriter("myAmazingImage2", 2500, 2500, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("myAmazingImage3", 2500, 2500, 500, 500);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();

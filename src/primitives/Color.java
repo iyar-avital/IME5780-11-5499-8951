@@ -172,4 +172,17 @@ public class Color {
         return new Color(r, g, b);
     }
 
+    /**
+     * help function that checks if two colors are same. what it is same color?
+     * what we decided was a similar color!!! (if someone have a problem with that- isnt care, its our project)
+     * @param other the second color to checks if it similar to me
+     * @return true if the colors same, false else
+     */
+    public boolean same(Color other) {
+        double r = Math.abs(_r - other._r);
+        double g = Math.abs(_g - other._g);
+        double b = Math.abs(_b - other._b);
+
+        return r < 5 && g < 5 && b < 5 ? true : false;
+    }
 }

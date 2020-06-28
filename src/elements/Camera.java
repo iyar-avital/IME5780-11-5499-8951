@@ -1,11 +1,15 @@
 package elements;
 
+import geometries.Intersectable;
+import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static primitives.Util.isZero;
 
 /**
  * camera class
@@ -90,7 +94,7 @@ public class Camera {
      * @return the ray from the starting point to current pixel
      */
     public Ray constructRayThroughPixel(int nX, int nY,
-                                        int j, int i, double screenDistance,
+                                        double j, double i, double screenDistance,
                                         double screenWidth, double screenHeight)
     {
         Point3D Pc = _p0.add(_vTo.scale(screenDistance));
@@ -132,9 +136,9 @@ public class Camera {
      * @return list of ray from the camera to one pixel
      *
      */
-    public List<Ray> constructRaysThroughPixel(int nX, int nY,
+    public List<Ray> constructRayThroughPixelMINI1(int nX, int nY,
                                               int j, int i, double screenDistance,
-                                              double screenWidth, double screenHeight)
+                                              double screenWidth, double screenHeight, double numOfRay)
     {
         Point3D Pc = _p0.add(_vTo.scale(screenDistance));
         double Ry = screenHeight/nY;
@@ -147,19 +151,19 @@ public class Camera {
         Ray myRay;
         List<Ray> allTheRays = new ArrayList<>();
 
-        for(double rows = j; rows < j + 1; rows = rows + (1d/9)) {
-            for (double columns = i; columns < i + 1; columns = columns + (1d/9)) {
+        for(double rows = j; rows < j + 1; rows = rows + (1d/numOfRay)) {
+            for (double columns = i; columns < i + 1; columns = columns + (1d/numOfRay)) {
                 Point3D pIJ = new Point3D(Pc);
 
                 yi = ((columns - nY / 2.0) * Ry + Ry / 2);
                 xj = (rows - nX / 2.0) * Rx + Rx / 2;
 
 
-                if (xj != 0) {
+                if (!isZero(xj)) {
                     pIJ = pIJ.add(_vRight.scale(xj));
                 }
 
-                if (yi != 0) {
+                if (!isZero(yi)) {
                     pIJ = pIJ.add(_vUp.scale(-yi));
                 }
                 vIJ = pIJ.subtract(_p0);
@@ -168,20 +172,5 @@ public class Camera {
             }
         }
         return allTheRays;
-//        double yi = ((i-nY/2.0) * Ry + Ry/2);
-//        double xj = (j-nX/2.0) * Rx + Rx/2;
-//
-//        Point3D pIJ = new Point3D(Pc);
-//
-//        if (xj != 0) {
-//            pIJ = pIJ.add(_vRight.scale(xj));
-//        }
-//
-//        if (yi != 0) {
-//            pIJ = pIJ.add(_vUp.scale(-yi));
-//        }
-//        Vector vIJ = pIJ.subtract(_p0);
-//        Ray(_p0, vIJ);
     }
-
 }

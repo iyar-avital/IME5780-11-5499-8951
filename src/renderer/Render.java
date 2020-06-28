@@ -18,7 +18,7 @@ import static primitives.Util.isZero;
 
 public class Render {
 
-    enum whatToRun { regular, nimiProject1, miniProject2 };
+    enum whatToRun { regular, miniProject1, miniProject2 };
     /**
      * a const that we raise the ray with it, in order to tha ray dosent cut itself
      */
@@ -48,10 +48,14 @@ public class Render {
         this._scene = _scene;
     }
 
-    public Render(ImageWriter imageWriter, Scene scene, whatToRun w) {
+    public Render(ImageWriter imageWriter, Scene scene, whatToRun w)  {
         this._imageWriter = imageWriter;
         this._scene = scene;
         this.whoNow = w;
+    }
+
+    public Render(ImageWriter imageWriter, Scene scene)  {
+        this(imageWriter, scene, whatToRun.miniProject2);
     }
 
     public Scene get_scene() {
@@ -97,7 +101,7 @@ public class Render {
                             Ray rays = camera.constructRayThroughPixel(Nx, Ny, pixel.col, pixel.row, distance, width, height);
                             GeoPoint closestPoint = findCLosestIntersection(rays);
                             _imageWriter.writePixel(pixel.col, pixel.row, closestPoint == null ? background : calcColor(closestPoint, rays).getColor());
-                        case nimiProject1:
+                        case miniProject1:
                             List<Ray> ray = camera.constructRayThroughPixelMINI1(Nx, Ny, pixel.col, pixel.row, distance, width, height,9);
                             _imageWriter.writePixel(pixel.col, pixel.row, calcColorMINI1(ray).getColor());
                         case miniProject2:

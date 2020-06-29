@@ -138,7 +138,7 @@ public class Camera {
      */
     public List<Ray> constructRayThroughPixelMINI1(int nX, int nY,
                                               int j, int i, double screenDistance,
-                                              double screenWidth, double screenHeight, double numOfRay)
+                                              double screenWidth, double screenHeight, int numOfRay)
     {
         Point3D Pc = _p0.add(_vTo.scale(screenDistance));
         double Ry = screenHeight/nY;

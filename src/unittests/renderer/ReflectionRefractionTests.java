@@ -157,7 +157,7 @@ public class ReflectionRefractionTests {
                 new Vector(-1, 1, 4), 1, 0.00001, 0.000005),new DirectionalLight(new Color(java.awt.Color.darkGray),   new Vector(-0.5, 0.5, 0)) );
 
         ImageWriter imageWriter = new ImageWriter("miniProject1", 2500, 2500, 500, 500);
-        Render render = new Render(imageWriter, scene, Render.whatToRun.nimiProject1);
+        Render render = new Render(imageWriter, scene, Render.whatToRun.nimiProject1, 100);
 
         render.renderImage();
         render.writeToImage();

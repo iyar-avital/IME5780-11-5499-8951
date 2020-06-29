@@ -142,7 +142,7 @@ public class Render {
                             GeoPoint closestPoint = findCLosestIntersection(rays);
                             _imageWriter.writePixel(pixel.col, pixel.row, closestPoint == null ? background : calcColor(closestPoint, rays).getColor()); break;
                         case nimiProject1:
-                            List<Ray> ray = camera.constructRayThroughPixelMINI1(Nx, Ny, pixel.col, pixel.row, distance, width, height, Math.sqrt(maxRaysForSuperSampling));
+                            List<Ray> ray = camera.constructRayThroughPixelMINI1(Nx, Ny, pixel.col, pixel.row, distance, width, height, (int)Math.sqrt(maxRaysForSuperSampling));
                             _imageWriter.writePixel(pixel.col, pixel.row, calcColorMINI1(ray).getColor()); break;
                         case miniProject2:
                             try {

@@ -67,9 +67,9 @@ public class Camera {
     /**
      * camera constructor- received p0, vto, vup
      * calculate vright - the cross product between vto and vup
-     * @param p0 - the camera starting point
-     * @param vTo - one vector
-     * @param vUp - the second vector
+     * @param p0 the camera starting point
+     * @param vTo one vector
+     * @param vUp the second vector
      */
     public Camera(Point3D p0, Vector vTo, Vector vUp)
     {
@@ -84,13 +84,13 @@ public class Camera {
 
     /**
      * calculate the ray from the camera starting point to current pixel (j,i)
-     * @param nX - number of pixels in x axis
-     * @param nY - number of pixels in y axis
-     * @param j - location of current pixel in the row
-     * @param i - location of current pixel in the column
-     * @param screenDistance - the distance between the camera and view plane
-     * @param screenWidth - the width plane in cm
-     * @param screenHeight - the height plane in cm
+     * @param nX number of pixels in x axis
+     * @param nY number of pixels in y axis
+     * @param j location of current pixel in the row
+     * @param i location of current pixel in the column
+     * @param screenDistance the distance between the camera and view plane
+     * @param screenWidth the width plane in cm
+     * @param screenHeight the height plane in cm
      * @return the ray from the starting point to current pixel
      */
     public Ray constructRayThroughPixel(int nX, int nY,
@@ -126,13 +126,13 @@ public class Camera {
      * the difference between this function to constructRayThroughPixel:
      * in this function we have 2 iterators that create the grid,
      * build a ray for all 1/9*1/9 pixel, and return all the rays.
-     * @param nX - number of pixels in x axis
-     * @param nY - number of pixels in y axis
-     * @param j - location of current pixel in the row
-     * @param i - location of current pixel in the column
-     * @param screenDistance - the distance between the camera and view plane
-     * @param screenWidth - the width plane in cm
-     * @param screenHeight - the width plane in cm
+     * @param nX number of pixels in x axis
+     * @param nY number of pixels in y axis
+     * @param j location of current pixel in the row
+     * @param i location of current pixel in the column
+     * @param screenDistance the distance between the camera and view plane
+     * @param screenWidth the width plane in cm
+     * @param screenHeight the height plane in cm
      * @return list of ray from the camera to one pixel
      *
      */

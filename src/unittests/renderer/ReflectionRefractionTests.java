@@ -148,6 +148,93 @@ public class ReflectionRefractionTests {
                 new Sphere(new Color(0, 0, 128), new Material(0.8, 0.9, 200,0,0.7), 450, new Point3D(-1020, 0, 1100)),
                 new Sphere(new Color(0, 128, 0), new Material(0.8, 0.9, 200,0,0.7), 450, new Point3D(1020, 0, 1100)),
                 new Sphere(new Color(128, 0, 0), new Material(0.8, 0.9, 200,0,0.7), 450, new Point3D(0, 0, 1100)),
+
+                //height
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -1100, 1100), new Point3D(-1800, -1200, 1100), new Point3D(-1800, -1100, 1100)),
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -1200, 1100), new Point3D(-1800, -1200, 1100), new Point3D(-1700, -1100, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -1100, 1100), new Point3D(-1800, -1000, 1100), new Point3D(-1700, -1000, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -1100, 1100), new Point3D(-1800, -1100, 1100), new Point3D(-1800, -1000, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -900, 1100), new Point3D(-1800, -1000, 1100), new Point3D(-1800, -900, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -1000, 1100), new Point3D(-1800, -1000, 1100), new Point3D(-1700, -900, 1100)),
+
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -900, 1100), new Point3D(-1800, -800, 1100), new Point3D(-1700, -800, 1100)),
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -900, 1100), new Point3D(-1800, -900, 1100), new Point3D(-1800, -800, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -700, 1100), new Point3D(-1800, -800, 1100), new Point3D(-1800, -700, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -800, 1100), new Point3D(-1800, -800, 1100), new Point3D(-1700, -700, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -700, 1100), new Point3D(-1800, -600, 1100), new Point3D(-1700, -600, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -700, 1100), new Point3D(-1800, -700, 1100), new Point3D(-1800, -600, 1100)),
+
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -500, 1100), new Point3D(-1800, -600, 1100), new Point3D(-1800, -500, 1100)),
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -600, 1100), new Point3D(-1800, -600, 1100), new Point3D(-1700, -500, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -500, 1100), new Point3D(-1800, -400, 1100), new Point3D(-1700, -400, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -500, 1100), new Point3D(-1800, -500, 1100), new Point3D(-1800, -400, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -300, 1100), new Point3D(-1800, -400, 1100), new Point3D(-1800, -300, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -400, 1100), new Point3D(-1800, -400, 1100), new Point3D(-1700, -300, 1100)),
+
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -300, 1100), new Point3D(-1800, -200, 1100), new Point3D(-1700, -200, 1100)),
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -300, 1100), new Point3D(-1800, -300, 1100), new Point3D(-1800, -200, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -100, 1100), new Point3D(-1800, -200, 1100), new Point3D(-1800, -100, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -200, 1100), new Point3D(-1800, -200, 1100), new Point3D(-1700, -100, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -100, 1100), new Point3D(-1800, 0, 1100), new Point3D(-1700, 0, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, -100, 1100), new Point3D(-1800, -100, 1100), new Point3D(-1800, 0, 1100)),
+
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 100, 1100), new Point3D(-1800, 0, 1100), new Point3D(-1800, 100, 1100)),
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 0, 1100), new Point3D(-1800, 0, 1100), new Point3D(-1700, 100, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 100, 1100), new Point3D(-1800, 200, 1100), new Point3D(-1700, 200, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 100, 1100), new Point3D(-1800, 100, 1100), new Point3D(-1800, 200, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 300, 1100), new Point3D(-1800, 200, 1100), new Point3D(-1800, 300, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 200, 1100), new Point3D(-1800, 200, 1100), new Point3D(-1700, 300, 1100)),
+
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 300, 1100), new Point3D(-1800, 400, 1100), new Point3D(-1700, 400, 1100)),
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 300, 1100), new Point3D(-1800, 300, 1100), new Point3D(-1800, 400, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 500, 1100), new Point3D(-1800, 400, 1100), new Point3D(-1800, 500, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 400, 1100), new Point3D(-1800, 400, 1100), new Point3D(-1700, 500, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 500, 1100), new Point3D(-1800, 600, 1100), new Point3D(-1700, 600, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1700, 500, 1100), new Point3D(-1800, 500, 1100), new Point3D(-1800, 600, 1100)),
+
+                //width
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1600, -1100, 1100), new Point3D(-1700, -1200, 1100), new Point3D(-1700, -1100, 1100)),
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1600, -1200, 1100), new Point3D(-1700, -1200, 1100), new Point3D(-1600, -1100, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1500, -1200, 1100), new Point3D(-1600, -1100, 1100), new Point3D(-1500, -1100, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1500, -1200, 1100), new Point3D(-1600, -1200, 1100), new Point3D(-1600, -1100, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1400, -1100, 1100), new Point3D(-1500, -1200, 1100), new Point3D(-1500, -1100, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1400, -1200, 1100), new Point3D(-1500, -1200, 1100), new Point3D(-1400, -1100, 1100)),
+
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1300, -1200, 1100), new Point3D(-1400, -1100, 1100), new Point3D(-1300, -1100, 1100)),
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1300, -1200, 1100), new Point3D(-1400, -1200, 1100), new Point3D(-1400, -1100, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1200, -1100, 1100), new Point3D(-1300, -1200, 1100), new Point3D(-1300, -1100, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1200, -1200, 1100), new Point3D(-1300, -1200, 1100), new Point3D(-1200, -1100, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1100, -1200, 1100), new Point3D(-1200, -1100, 1100), new Point3D(-1100, -1100, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1100, -1200, 1100), new Point3D(-1200, -1200, 1100), new Point3D(-1200, -1100, 1100)),
+
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1000, -1100, 1100), new Point3D(-1100, -1200, 1100), new Point3D(-1100, -1100, 1100)),
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-1000, -1200, 1100), new Point3D(-1100, -1200, 1100), new Point3D(-1000, -1100, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-900, -1200, 1100), new Point3D(-1000, -1100, 1100), new Point3D(-900, -1100, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-900, -1200, 1100), new Point3D(-1000, -1200, 1100), new Point3D(-1000, -1100, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-800, -1100, 1100), new Point3D(-900, -1200, 1100), new Point3D(-900, -1100, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-800, -1200, 1100), new Point3D(-900, -1200, 1100), new Point3D(-800, -1100, 1100)),
+
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-700, -1200, 1100), new Point3D(-800, -1100, 1100), new Point3D(-700, -1100, 1100)),
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-700, -1200, 1100), new Point3D(-800, -1200, 1100), new Point3D(-800, -1100, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-600, -1100, 1100), new Point3D(-700, -1200, 1100), new Point3D(-700, -1100, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-600, -1200, 1100), new Point3D(-700, -1200, 1100), new Point3D(-600, -1100, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-500, -1200, 1100), new Point3D(-600, -1100, 1100), new Point3D(-500, -1100, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-500, -1200, 1100), new Point3D(-600, -1200, 1100), new Point3D(-600, -1100, 1100)),
+
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-400, -1100, 1100), new Point3D(-500, -1200, 1100), new Point3D(-500, -1100, 1100)),
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-400, -1200, 1100), new Point3D(-500, -1200, 1100), new Point3D(-400, -1100, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-300, -1200, 1100), new Point3D(-400, -1100, 1100), new Point3D(-300, -1100, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-300, -1200, 1100), new Point3D(-400, -1200, 1100), new Point3D(-400, -1100, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-200, -1100, 1100), new Point3D(-300, -1200, 1100), new Point3D(-300, -1100, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-200, -1200, 1100), new Point3D(-300, -1200, 1100), new Point3D(-200, -1100, 1100)),
+
+                new Triangle(new Color(250, 50, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-100, -1200, 1100), new Point3D(-200, -1100, 1100), new Point3D(-100, -1100, 1100)),
+                new Triangle(new Color(250, 100, 90), new Material(0.8, 0.9, 200,0,0.7), new Point3D(-100, -1200, 1100), new Point3D(-200, -1200, 1100), new Point3D(-200, -1100, 1100)),
+                new Triangle(new Color(160, 250, 140), new Material(0.8, 0.9, 200,0,0.7), new Point3D(0, -1100, 1100), new Point3D(-100, -1200, 1100), new Point3D(-100, -1100, 1100)),
+                new Triangle(new Color(50, 250, 25), new Material(0.8, 0.9, 200,0,0.7), new Point3D(0, -1200, 1100), new Point3D(-100, -1200, 1100), new Point3D(0, -1100, 1100)),
+                new Triangle(new Color(45, 45, 250), new Material(0.8, 0.9, 200,0,0.7), new Point3D(100, -1200, 1100), new Point3D(0, -1100, 1100), new Point3D(100, -1100, 1100)),
+                new Triangle(new Color(140, 180, 255), new Material(0.8, 0.9, 200,0,0.7), new Point3D(100, -1200, 1100), new Point3D(0, -1200, 1100), new Point3D(0, -1100, 1100)),
+
                 new Plane(new Color(java.awt.Color.black), new Material(0.4, 0.3, 20000, 0, 0.4), new Point3D(1500, 1500, 0),
                         new Point3D(-1500, -1500, 3850), new Point3D(-1500, 1500, 0)));
 
@@ -158,8 +245,8 @@ public class ReflectionRefractionTests {
                 new Vector(-1, 1, 4), 1, 0.00001, 0.000005),new SpotLight(new Color(1020, 400, 400),  new Point3D(-800, 100, -300),
                 new Vector(-1, 1, 4), 1, 0.00001, 0.000005),new DirectionalLight(new Color(java.awt.Color.darkGray),   new Vector(-0.5, 0.5, 0)) );
 
-        ImageWriter imageWriter = new ImageWriter("myAmazingImage3", 2500, 2500, 500, 500);
-        Render render = new Render(imageWriter, scene);
+        ImageWriter imageWriter = new ImageWriter("myAmazingImage3", 3000, 2000, 600, 400);
+        Render render = new Render(imageWriter, scene, Render.whatToRun.miniProject2);
 
         render.renderImage();
         render.writeToImage();

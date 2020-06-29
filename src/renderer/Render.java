@@ -18,18 +18,25 @@ import static primitives.Util.isZero;
 
 public class Render {
 
-    enum whatToRun { regular, nimiProject1, miniProject2 };
+    public enum whatToRun { regular, nimiProject1, miniProject2 };
+    private whatToRun whoNow = whatToRun.regular;
+    /**
+     * numOfRaysForSuperSampling - number of rays for super sampling
+     */
+    private int maxRaysForSuperSampling = 81;
+
+    /**
+     * numOfRays - setNumOfRays
+     * set the number of rays in each pixel
+     */
+    public void setMaxRaysForSuperSampling(int maxRaysForSuperSampling) {
+        this.maxRaysForSuperSampling = maxRaysForSuperSampling;
+    }
+
     /**
      * a const that we raise the ray with it, in order to tha ray dosent cut itself
      */
     private static final double DELTA = 0.1;
-
-    /**
-     * numOfRaysForSuperSampling - number of rays for super sampling
-     */
-    private int maxRaysForSuperSampling = 100;
-
-    private whatToRun whoNow = whatToRun.regular;
 
     /**
      * MAX_CALC_COLOR_LEVEL - maximum level in the recursion three
@@ -44,26 +51,63 @@ public class Render {
     private ImageWriter _imageWriter;
     private Scene _scene;
 
+    /**
+     * constructor received scene
+     * @param _scene the scene
+     */
     public Render(Scene _scene) {
         this._scene = _scene;
     }
 
-    public Render(ImageWriter imageWriter, Scene scene, whatToRun w) {
-        this._imageWriter = imageWriter;
-        this._scene = scene;
-        this.whoNow = w;
-    }
-
-    public Scene get_scene() {
-        return _scene;
+    /**
+     * constructor received scene and imageWriter
+     * @param imageWriter the imageWriter
+     * @param scene the scene
+     */
+    public Render(ImageWriter imageWriter, Scene scene) {
+        this(imageWriter, scene, whatToRun.miniProject2);
     }
 
     /**
-     * numOfRays - setNumOfRays
-     * set the number of rays in each pixel
+     *
+     * @param imageWriter the imagewriter
+     * @param scene the scene
+     * @param w who run now (regular/ miniproject1/ mini project2)
      */
-    public void setMaxRaysForSuperSampling(int maxRaysForSuperSampling) {
-        this.maxRaysForSuperSampling = maxRaysForSuperSampling;
+    public Render(ImageWriter imageWriter, Scene scene, whatToRun w) {
+       this(imageWriter, scene, w, 81);
+    }
+
+    /**
+     *
+     * @param imageWriter the imagewriter
+     * @param scene the scene
+     * @param numOfPixel the max number of pixel
+     */
+    public Render(ImageWriter imageWriter, Scene scene, int numOfPixel) {
+        this(imageWriter, scene, whatToRun.miniProject2, numOfPixel);
+    }
+
+    /**
+     *
+     * @param imageWriter the imagewriter
+     * @param scene the scene
+     * @param w who run now (regular/ miniproject1/ mini project2)
+     * @param numOfRays the max number of pixel
+     */
+    public Render(ImageWriter imageWriter, Scene scene, whatToRun w, int numOfRays) {
+        this._imageWriter = imageWriter;
+        this._scene = scene;
+        this.whoNow = w;
+        if (numOfRays > 500)
+            this.maxRaysForSuperSampling = 81;
+        else
+            this.maxRaysForSuperSampling = numOfRays;
+    }
+
+
+    public Scene get_scene() {
+        return _scene;
     }
 
     /**
@@ -96,16 +140,16 @@ public class Render {
                         case regular:
                             Ray rays = camera.constructRayThroughPixel(Nx, Ny, pixel.col, pixel.row, distance, width, height);
                             GeoPoint closestPoint = findCLosestIntersection(rays);
-                            _imageWriter.writePixel(pixel.col, pixel.row, closestPoint == null ? background : calcColor(closestPoint, rays).getColor());
+                            _imageWriter.writePixel(pixel.col, pixel.row, closestPoint == null ? background : calcColor(closestPoint, rays).getColor()); break;
                         case nimiProject1:
-                            List<Ray> ray = camera.constructRayThroughPixelMINI1(Nx, Ny, pixel.col, pixel.row, distance, width, height,9);
-                            _imageWriter.writePixel(pixel.col, pixel.row, calcColorMINI1(ray).getColor());
+                            List<Ray> ray = camera.constructRayThroughPixelMINI1(Nx, Ny, pixel.col, pixel.row, distance, width, height, Math.sqrt(maxRaysForSuperSampling));
+                            _imageWriter.writePixel(pixel.col, pixel.row, calcColorMINI1(ray).getColor()); break;
                         case miniProject2:
                             try {
                                 Color adaptiveColor = AdaptiveSuperSampling(Nx, Ny, pixel.col, pixel.row, distance, width, height, maxRaysForSuperSampling);
-                                _imageWriter.writePixel(pixel.col, pixel.row, adaptiveColor.getColor());
+                                _imageWriter.writePixel(pixel.col, pixel.row, adaptiveColor.getColor()); break;
                             } catch (Exception e) {}
-                        default: {};
+                        default: break;
                     }
                 }});
         }
@@ -205,12 +249,12 @@ public class Render {
         Color x = Color.BLACK;
         for(Ray r:rays){
             GeoPoint p = findCLosestIntersection(r);
-            if(p==null)
-                x=x.add(_scene.get_background());
+            if(p == null)
+                x = x.add(_scene.get_background());
             else
-                x=x.add(calcColor(p,r));
+                x = x.add(calcColor(p,r));
         }
-        x= x.reduce(rays.size());
+        x = x.reduce(rays.size());
         return x;
     }
 
@@ -484,6 +528,19 @@ public class Render {
         }
     }
 
+    /**
+     *
+     * @param nX number of pixel in axis x
+     * @param nY number of pixel in axis y
+     * @param j location of current pixel in the row
+     * @param i location of current pixel in the column
+     * @param screenDistance the distance between the camera and view plane
+     * @param screenWidth the width plane in cm
+     * @param screenHeight the height plane in cm
+     * @param numOfRays max rays we can create from one pixel
+     * @return the pixel color
+     * @throws Exception
+     */
     public primitives.Color AdaptiveSuperSampling(int nX, int nY, int j, int i, double screenDistance, double screenWidth, double screenHeight, int numOfRays) throws Exception {
         Camera camera = _scene.get_camera();
         Vector Vright = camera.getV_right();
@@ -512,18 +569,31 @@ public class Render {
         if(Xj != 0) Pij = Pij.add(Vright.scale(-Xj)) ;
         if(Yi != 0) Pij = Pij.add(Vup.scale(-Yi));
 
-        double PRy = Ry/numOfRaysInRowCol;
-        double PRx = Rx/numOfRaysInRowCol;
-        return AdaptiveSuperSamplingRec(Pij, Rx, Ry, PRx, PRy,cameraLoc,Vright, Vup);
+        double minRy = Ry/numOfRaysInRowCol;
+        double minRx = Rx/numOfRaysInRowCol;
+        return AdaptiveSuperSamplingRec(Pij, Rx, Ry, minRx, minRy,cameraLoc,Vright, Vup);
     }
 
-
+    /**
+     *
+     * @param centerP the point in (j,i), the center point in the pixel
+     * @param Width the width of pixel
+     * @param Height the height of pixel
+     * @param minWidth the min pixel width, when width < min width we need to stop the recursion
+     * @param minHeight the min pixel height, when width < min height we need to stop the recursion
+     * @param cameraLoc the camera point
+     * @param Vright vector v- right
+     * @param Vup vector v- up
+     * @return the "tat" pixel color
+     * @throws Exception
+     */
     private primitives.Color AdaptiveSuperSamplingRec(Point3D centerP, double Width, double Height, double minWidth, double minHeight, Point3D cameraLoc,Vector Vright,Vector Vup) throws Exception {
         //4 point "קצוות" of the pixel quarters
         Point3D corner1 = centerP.add(Vright.scale(Width / 2)).add(Vup.scale(-Height / 2)),
                 corner2 = centerP.add(Vright.scale(Width / 2)).add(Vup.scale(Height / 2)),
                 corner3 = centerP.add(Vright.scale(-Width / 2)).add(Vup.scale(-Height / 2)),
                 corner4 = centerP.add(Vright.scale(-Width / 2)).add(Vup.scale(Height / 2));
+
         //create a ray from the camera point, the direction is the vector from the center of quarter to camera point
         Ray     ray1 = new Ray(cameraLoc, corner1.subtract(cameraLoc)),
                 ray2 = new Ray(cameraLoc, corner2.subtract(cameraLoc)),
@@ -531,10 +601,10 @@ public class Render {
                 ray4 = new Ray(cameraLoc, corner4.subtract(cameraLoc));
 
         //calculate the color of all the ray
-        primitives.Color color1= calcColor(ray1),
-                color2= calcColor(ray2),
-                color3= calcColor(ray3),
-                color4= calcColor(ray4);
+        primitives.Color color1 = calcColor(ray1),
+                color2 = calcColor(ray2),
+                color3 = calcColor(ray3),
+                color4 = calcColor(ray4);
 
         //checks the Recursion stop conditions, if the recursion is to be stopped we will return an average of the colors
         if(Width <= minWidth || Height <= minHeight)
